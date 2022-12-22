@@ -84,6 +84,7 @@ type ResponseHeader struct {
 	AptosLedgerTimestampusec uint64
 	AptosLedgerVersion       uint64
 	AptosOldestBlockHeight   uint64
+	AptosCursor              string
 }
 
 func request(ctx context.Context, method, endpoint string, reqBody, resp interface{},
@@ -187,6 +188,9 @@ func request(ctx context.Context, method, endpoint string, reqBody, resp interfa
 		if len(rsp.Header["X-Aptos-Oldest-Block-Height"]) > 0 {
 			v, _ := new(big.Int).SetString(rsp.Header["X-Aptos-Oldest-Block-Height"][0], 10)
 			respHeader.AptosOldestBlockHeight = v.Uint64()
+		}
+		if len(rsp.Header["X-Aptos-Cursor"]) > 0 {
+			respHeader.AptosCursor = rsp.Header["X-Aptos-Cursor"][0]
 		}
 	}
 	return nil
