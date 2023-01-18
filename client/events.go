@@ -20,7 +20,7 @@ type EventsImpl struct {
 func (impl EventsImpl) GetEventsByCreationNumber(ctx context.Context, address, creationNumber string, query map[string]interface{}, opts ...interface{}) ([]models.Event, error) {
 	var rspJSON []models.Event
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/events/%s", address, creationNumber),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/events/%s", address, creationNumber),
 		nil, &rspJSON, query, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -32,7 +32,7 @@ func (impl EventsImpl) GetEventsByCreationNumber(ctx context.Context, address, c
 func (impl EventsImpl) GetEventsByEventHandle(ctx context.Context, address, handleStruct, fieldName string, start, limit uint64, opts ...interface{}) ([]models.Event, error) {
 	var rspJSON []models.Event
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/events/%s/%s",
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/events/%s/%s",
 			address, handleStruct, fieldName),
 		nil, &rspJSON, map[string]interface{}{
 			"start": start,

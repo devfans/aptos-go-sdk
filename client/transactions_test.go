@@ -1,12 +1,29 @@
 package client
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
+	"github.com/portto/aptos-go-sdk/models"
 	"github.com/stretchr/testify/assert"
 )
+
+func TestView(t *testing.T) {
+	impl := NewAptosClient("https://fullnode.mainnet.aptoslabs.com/v1")
+	p := models.ViewParam{
+		Function: "0x1::coin::balance",
+		Arguments: []string{"0x0e69e1d1069f086aca14daccbd3183848a1a446f5c3d3ea09bfa964e9324798c"},
+		TypeArguments: []string{"0x1::aptos_coin::AptosCoin"},
+	}
+	_, err := impl.GetAccountResources(context.Background(), "0x0e69e1d1069f086aca14daccbd3183848a1a446f5c3d3ea09bfa964e9324798c")
+	t.Log(err)
+	resp := make(map[string]interface{})
+	err = impl.View(context.Background(), p, &resp, nil)
+	assert.NoError(t, err)
+	t.Logf("%v", resp)
+}
 
 func TestGetTransactionByHash(t *testing.T) {
 	t.Run("Success", func(t *testing.T) {

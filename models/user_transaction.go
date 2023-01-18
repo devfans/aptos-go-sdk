@@ -12,6 +12,12 @@ var _ = lcs.RegisterEnum(
 	UserTransaction{},
 )
 
+type ViewParam struct {
+	Function string `json:"function"`
+	Arguments []string `json:"arguments"`
+	TypeArguments []string `json:"type_arguments"`
+}
+
 type UserTransaction struct {
 	RawTransaction
 	Authenticator    TransactionAuthenticator

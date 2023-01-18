@@ -22,7 +22,7 @@ type TableItemReq struct {
 
 func (impl StateImpl) GetTableItemByHandleAndKey(ctx context.Context, handle string, req TableItemReq, resp interface{}, opts ...interface{}) error {
 	err := request(ctx, http.MethodPost,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/tables/%s/item", handle),
+		impl.Base.Endpoint()+fmt.Sprintf("/tables/%s/item", handle),
 		req, resp, nil, requestOptions(opts...))
 	if err != nil {
 		return err

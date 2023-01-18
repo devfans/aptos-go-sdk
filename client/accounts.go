@@ -30,7 +30,7 @@ type AccountInfo struct {
 func (impl AccountsImpl) GetAccount(ctx context.Context, address string, opts ...interface{}) (*AccountInfo, error) {
 	var rspJSON AccountInfo
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s", address),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s", address),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -91,7 +91,7 @@ type TokenStoreResource struct {
 func (impl AccountsImpl) GetAccountResources(ctx context.Context, address string, opts ...interface{}) ([]AccountResource, error) {
 	var rspJSON []AccountResource
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/resources", address),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/resources", address),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -105,20 +105,20 @@ func (impl AccountsImpl) GetResources(ctx context.Context, address, start string
 		start = "?start=" + start
 	}
 	return request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/resources%s", address, start),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/resources%s", address, start),
 		nil, resp, nil, requestOptions(opts...))
 }
 
 func (impl AccountsImpl) GetResource(ctx context.Context, address, resourceType string, resp interface{}, opts ...interface{}) error {
 	return request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/resource/%s", address, resourceType),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/resource/%s", address, resourceType),
 		nil, resp, nil, requestOptions(opts...))
 }
 
 func (impl AccountsImpl) GetResourceByAccountAddressAndResourceType(ctx context.Context, address, resourceType string, opts ...interface{}) (*AccountResource, error) {
 	var rspJSON AccountResource
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/resource/%s", address, resourceType),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/resource/%s", address, resourceType),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -169,7 +169,7 @@ type Field struct {
 func (impl AccountsImpl) GetAccountModules(ctx context.Context, address string, opts ...interface{}) ([]AccountModule, error) {
 	var rspJSON []AccountModule
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/modules", address),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/modules", address),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, fmt.Errorf("client.GetAccountModules error: %w", err)
@@ -181,7 +181,7 @@ func (impl AccountsImpl) GetAccountModules(ctx context.Context, address string, 
 func (impl AccountsImpl) GetModuleByModuleID(ctx context.Context, address, moduleID string, opts ...interface{}) (*AccountModule, error) {
 	var rspJSON AccountModule
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/module/%s", address, moduleID),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/module/%s", address, moduleID),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, fmt.Errorf("client.GetModuleByModuleID error: %w", err)
@@ -192,7 +192,7 @@ func (impl AccountsImpl) GetModuleByModuleID(ctx context.Context, address, modul
 
 func (impl AccountsImpl) GetResourceWithCustomType(ctx context.Context, address, resourceType string, resp interface{}, opts ...interface{}) error {
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/resource/%s", address, resourceType),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/resource/%s", address, resourceType),
 		nil, resp, nil, requestOptions(opts...))
 	if err != nil {
 		return err

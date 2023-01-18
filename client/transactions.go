@@ -18,6 +18,7 @@ type Transactions interface {
 	GetTransactionByVersion(ctx context.Context, version uint64, opts ...interface{}) (*TransactionResp, error)
 	EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, error)
 	WaitForTransaction(ctx context.Context, txHash string) error
+	View(ctx context.Context, param models.ViewParam, resp interface{}, opts ...interface{}) error
 }
 
 type TransactionsImpl struct {
@@ -60,7 +61,7 @@ type TransactionResp struct {
 func (impl TransactionsImpl) GetTransactions(ctx context.Context, start, limit int, opts ...interface{}) ([]TransactionResp, error) {
 	var rspJSON []TransactionResp
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+"/v1/transactions",
+		impl.Base.Endpoint()+"/transactions",
 		nil, &rspJSON, map[string]interface{}{
 			"start": start,
 			"limit": limit,
@@ -75,7 +76,7 @@ func (impl TransactionsImpl) GetTransactions(ctx context.Context, start, limit i
 func (impl TransactionsImpl) SubmitTransaction(ctx context.Context, tx models.UserTransaction, opts ...interface{}) (*TransactionResp, error) {
 	var rspJSON TransactionResp
 	err := request(ctx, http.MethodPost,
-		impl.Base.Endpoint()+"/v1/transactions",
+		impl.Base.Endpoint()+"/transactions",
 		tx, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -88,7 +89,7 @@ func (impl TransactionsImpl) SimulateTransaction(ctx context.Context, tx models.
 	estimateGasUnitPrice, estimateMaxGasAmount bool, opts ...interface{}) ([]TransactionResp, error) {
 	var rspJSON []TransactionResp
 	err := request(ctx, http.MethodPost,
-		impl.Base.Endpoint()+"/v1/transactions/simulate",
+		impl.Base.Endpoint()+"/transactions/simulate",
 		tx.ForSimulate(), &rspJSON, map[string]interface{}{
 			"estimate_gas_unit_price": estimateGasUnitPrice,
 			"estimate_max_gas_amount": estimateMaxGasAmount,
@@ -100,10 +101,17 @@ func (impl TransactionsImpl) SimulateTransaction(ctx context.Context, tx models.
 	return rspJSON, nil
 }
 
+
+func (impl TransactionsImpl) View(ctx context.Context, param models.ViewParam, resp interface{}, opts ...interface{}) error {
+	return request(ctx, http.MethodPost,
+		impl.Base.Endpoint()+"/view",
+		param, resp, nil, requestOptions(opts...))
+}
+
 func (impl TransactionsImpl) GetAccountTransactions(ctx context.Context, address string, start, limit int, opts ...interface{}) ([]TransactionResp, error) {
 	var rspJSON []TransactionResp
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/accounts/%s/transactions", address),
+		impl.Base.Endpoint()+fmt.Sprintf("/accounts/%s/transactions", address),
 		nil, &rspJSON, map[string]interface{}{
 			"start": start,
 			"limit": limit,
@@ -118,7 +126,7 @@ func (impl TransactionsImpl) GetAccountTransactions(ctx context.Context, address
 func (impl TransactionsImpl) GetTransactionByHash(ctx context.Context, txHash string, opts ...interface{}) (*TransactionResp, error) {
 	var rspJSON TransactionResp
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/transactions/by_hash/%s", txHash),
+		impl.Base.Endpoint()+fmt.Sprintf("/transactions/by_hash/%s", txHash),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -130,7 +138,7 @@ func (impl TransactionsImpl) GetTransactionByHash(ctx context.Context, txHash st
 func (impl TransactionsImpl) GetTransactionByVersion(ctx context.Context, version uint64, opts ...interface{}) (*TransactionResp, error) {
 	var rspJSON TransactionResp
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+fmt.Sprintf("/v1/transactions/by_version/%d", version),
+		impl.Base.Endpoint()+fmt.Sprintf("/transactions/by_version/%d", version),
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return nil, err
@@ -145,7 +153,7 @@ func (impl TransactionsImpl) EstimateGasPrice(ctx context.Context, opts ...inter
 	}
 	var rspJSON response
 	err := request(ctx, http.MethodGet,
-		impl.Base.Endpoint()+"/v1/estimate_gas_price",
+		impl.Base.Endpoint()+"/estimate_gas_price",
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
 		return 0, err

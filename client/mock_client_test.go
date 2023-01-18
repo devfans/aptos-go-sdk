@@ -14,6 +14,19 @@ type MockAptosClient struct {
 	mock.Mock
 }
 
+
+func (_m *MockAptosClient) GetResources(ctx context.Context, address, start string, resp interface{}, opts ...interface{}) error {
+	return nil
+}
+
+func (_m *MockAptosClient) GetResource(ctx context.Context, address, resourceType string, resp interface{}, opts ...interface{}) error {
+	return nil
+}
+
+func (_m *MockAptosClient) View(ctx context.Context, param models.ViewParam, resp interface{}, opts ...interface{}) error {
+	return nil
+}
+
 // CheckBasicNodeHealth provides a mock function with given fields: ctx, durationSecs, opts
 func (_m *MockAptosClient) CheckBasicNodeHealth(ctx context.Context, durationSecs uint32, opts ...interface{}) (*HealthInfo, error) {
 	var _ca []interface{}
