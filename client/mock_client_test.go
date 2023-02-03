@@ -54,7 +54,7 @@ func (_m *MockAptosClient) CheckBasicNodeHealth(ctx context.Context, durationSec
 }
 
 // EstimateGasPrice provides a mock function with given fields: ctx, opts
-func (_m *MockAptosClient) EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, error) {
+func (_m *MockAptosClient) EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, uint64, uint64, error) {
 	var _ca []interface{}
 	_ca = append(_ca, ctx)
 	_ca = append(_ca, opts...)
@@ -74,7 +74,7 @@ func (_m *MockAptosClient) EstimateGasPrice(ctx context.Context, opts ...interfa
 		r1 = ret.Error(1)
 	}
 
-	return r0, r1
+	return r0, 0, 0, r1
 }
 
 // GetAccount provides a mock function with given fields: ctx, address, opts

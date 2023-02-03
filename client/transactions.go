@@ -16,7 +16,7 @@ type Transactions interface {
 	GetAccountTransactions(ctx context.Context, address string, start, limit int, opts ...interface{}) ([]TransactionResp, error)
 	GetTransactionByHash(ctx context.Context, txHash string, opts ...interface{}) (*TransactionResp, error)
 	GetTransactionByVersion(ctx context.Context, version uint64, opts ...interface{}) (*TransactionResp, error)
-	EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, error)
+	EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, uint64, uint64, error)
 	WaitForTransaction(ctx context.Context, txHash string) error
 	View(ctx context.Context, param models.ViewParam, resp interface{}, opts ...interface{}) error
 }
@@ -147,19 +147,21 @@ func (impl TransactionsImpl) GetTransactionByVersion(ctx context.Context, versio
 	return &rspJSON, nil
 }
 
-func (impl TransactionsImpl) EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, error) {
+func (impl TransactionsImpl) EstimateGasPrice(ctx context.Context, opts ...interface{}) (uint64, uint64, uint64, error) {
 	type response struct {
 		GasEstimate uint64 `json:"gas_estimate"`
+		LowEstimate uint64 `json:"deprioritized_gas_estimate"`
+		HighEstimate uint64 `json:"prioritized_gas_estimate"`
 	}
 	var rspJSON response
 	err := request(ctx, http.MethodGet,
 		impl.Base.Endpoint()+"/estimate_gas_price",
 		nil, &rspJSON, nil, requestOptions(opts...))
 	if err != nil {
-		return 0, err
+		return 0, 0, 0, err
 	}
 
-	return rspJSON.GasEstimate, nil
+	return rspJSON.GasEstimate, rspJSON.LowEstimate, rspJSON.HighEstimate, nil
 }
 
 const (

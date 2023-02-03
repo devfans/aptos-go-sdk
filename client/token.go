@@ -76,7 +76,7 @@ func (impl *TokenClientImpl) CreateCollection(ctx context.Context, creator model
 		return "", fmt.Errorf("get account info error: %w", err)
 	}
 
-	gasPrice, err := impl.client.EstimateGasPrice(ctx)
+	gasPrice, _, _, err := impl.client.EstimateGasPrice(ctx)
 	if err != nil {
 		return "", fmt.Errorf("get estimate gas price error: %w", err)
 	}
@@ -136,7 +136,7 @@ func (impl *TokenClientImpl) CreateToken(ctx context.Context, creator models.Sin
 		return "", fmt.Errorf("get account info error: %w", err)
 	}
 
-	gasPrice, err := impl.client.EstimateGasPrice(ctx)
+	gasPrice, _, _,  err := impl.client.EstimateGasPrice(ctx)
 	if err != nil {
 		return "", fmt.Errorf("get estimate gas price error: %w", err)
 	}
@@ -192,7 +192,7 @@ func (impl *TokenClientImpl) MintToken(ctx context.Context, minter models.Single
 		return "", fmt.Errorf("get account info error: %w", err)
 	}
 
-	gasPrice, err := impl.client.EstimateGasPrice(ctx)
+	gasPrice, _, _, err := impl.client.EstimateGasPrice(ctx)
 	if err != nil {
 		return "", fmt.Errorf("get estimate gas price error: %w", err)
 	}
@@ -244,7 +244,7 @@ func (impl *TokenClientImpl) OfferToken(ctx context.Context, sender models.Singl
 		return "", fmt.Errorf("get account info error: %w", err)
 	}
 
-	gasPrice, err := impl.client.EstimateGasPrice(ctx)
+	gasPrice, _, _, err := impl.client.EstimateGasPrice(ctx)
 	if err != nil {
 		return "", fmt.Errorf("get estimate gas price error: %w", err)
 	}
@@ -302,7 +302,7 @@ func (impl *TokenClientImpl) ClaimToken(ctx context.Context, receiver models.Sin
 		return "", fmt.Errorf("get account info error: %w", err)
 	}
 
-	gasPrice, err := impl.client.EstimateGasPrice(ctx)
+	gasPrice, _, _, err := impl.client.EstimateGasPrice(ctx)
 	if err != nil {
 		return "", fmt.Errorf("get estimate gas price error: %w", err)
 	}
