@@ -476,7 +476,7 @@ func (_m *MockAptosClient) LedgerInformation(ctx context.Context, opts ...interf
 }
 
 // SimulateTransaction provides a mock function with given fields: ctx, tx, estimateGasUnitPrice, estimateMaxGasAmount, opts
-func (_m *MockAptosClient) SimulateTransaction(ctx context.Context, tx models.UserTransaction, estimateGasUnitPrice bool, estimateMaxGasAmount bool, opts ...interface{}) ([]TransactionResp, error) {
+func (_m *MockAptosClient) SimulateTransaction(ctx context.Context, tx models.UserTransaction, estimateGasUnitPrice bool, estimateMaxGasAmount bool, estimatePrioritizedGasUnitPrice bool, opts ...interface{}) ([]TransactionResp, error) {
 	var _ca []interface{}
 	_ca = append(_ca, ctx, tx, estimateGasUnitPrice, estimateMaxGasAmount)
 	_ca = append(_ca, opts...)

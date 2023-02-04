@@ -303,7 +303,7 @@ func replaceAuthKey() {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -370,7 +370,7 @@ func transferTxMultiED25519() {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -451,7 +451,7 @@ func createAccountTx(keyNum int) (authKey [32]byte, seeds []string) {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -501,7 +501,7 @@ func faucet(address models.AccountAddress, amount uint64) {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -587,7 +587,7 @@ func invokeMultiAgent() {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -725,7 +725,7 @@ func invokeMultiAgentRotateKey() {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -798,7 +798,7 @@ func invokeScriptPayload() {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -900,7 +900,7 @@ func invokeMultiAgentScriptPayload(scriptName string, typeArgs []models.TypeTag,
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -979,7 +979,7 @@ func createWeightAccountTx() (authKey [32]byte, seeds []string) {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}
@@ -1050,7 +1050,7 @@ func transferTxWeightedMultiED25519() {
 		panic(err)
 	}
 
-	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false)
+	_, err = aptosClient.SimulateTransaction(ctx, tx.UserTransaction, false, false, false)
 	if err != nil {
 		panic(err)
 	}

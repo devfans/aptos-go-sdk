@@ -12,7 +12,7 @@ import (
 type Transactions interface {
 	GetTransactions(ctx context.Context, start, limit int, opts ...interface{}) ([]TransactionResp, error)
 	SubmitTransaction(ctx context.Context, tx models.UserTransaction, opts ...interface{}) (*TransactionResp, error)
-	SimulateTransaction(ctx context.Context, tx models.UserTransaction, estimateGasUnitPrice, estimateMaxGasAmount bool, opts ...interface{}) ([]TransactionResp, error)
+	SimulateTransaction(ctx context.Context, tx models.UserTransaction, estimateGasUnitPrice, estimateMaxGasAmount bool, estimatePrioritizedGasUnitPrice bool, opts ...interface{}) ([]TransactionResp, error)
 	GetAccountTransactions(ctx context.Context, address string, start, limit int, opts ...interface{}) ([]TransactionResp, error)
 	GetTransactionByHash(ctx context.Context, txHash string, opts ...interface{}) (*TransactionResp, error)
 	GetTransactionByVersion(ctx context.Context, version uint64, opts ...interface{}) (*TransactionResp, error)
@@ -86,13 +86,14 @@ func (impl TransactionsImpl) SubmitTransaction(ctx context.Context, tx models.Us
 }
 
 func (impl TransactionsImpl) SimulateTransaction(ctx context.Context, tx models.UserTransaction,
-	estimateGasUnitPrice, estimateMaxGasAmount bool, opts ...interface{}) ([]TransactionResp, error) {
+	estimateGasUnitPrice, estimateMaxGasAmount bool, estimatePrioritizedGasUnitPrice bool, opts ...interface{}) ([]TransactionResp, error) {
 	var rspJSON []TransactionResp
 	err := request(ctx, http.MethodPost,
 		impl.Base.Endpoint()+"/transactions/simulate",
 		tx.ForSimulate(), &rspJSON, map[string]interface{}{
 			"estimate_gas_unit_price": estimateGasUnitPrice,
 			"estimate_max_gas_amount": estimateMaxGasAmount,
+			"estimate_prioritized_gas_unit_price": estimatePrioritizedGasUnitPrice,
 		}, requestOptions(opts...))
 	if err != nil {
 		return nil, err
