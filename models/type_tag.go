@@ -81,3 +81,17 @@ func (t TypeTagStruct) ToString() string {
 
 	return fmt.Sprintf("%s<%s>", structType, strings.Join(types, ","))
 }
+
+func (t TypeTagStruct) TrimPrefixString() string {
+	structType := fmt.Sprintf("%s::%s::%s", t.Address.PrefixZeroTrimmedHex(), t.Module, t.Name)
+	if len(t.TypeParams) == 0 {
+		return structType
+	}
+
+	var types []string
+	for _, p := range t.TypeParams {
+		types = append(types, p.ToString())
+	}
+
+	return fmt.Sprintf("%s<%s>", structType, strings.Join(types, ","))
+}

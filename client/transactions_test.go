@@ -13,13 +13,13 @@ import (
 func TestView(t *testing.T) {
 	impl := NewAptosClient("https://fullnode.mainnet.aptoslabs.com/v1")
 	p := models.ViewParam{
-		Function: "0x1::coin::balance",
-		Arguments: []string{"0x0e69e1d1069f086aca14daccbd3183848a1a446f5c3d3ea09bfa964e9324798c"},
-		TypeArguments: []string{"0x1::aptos_coin::AptosCoin"},
+		Function: "0x0e69e1d1069f086aca14daccbd3183848a1a446f5c3d3ea09bfa964e9324798c::BetterSwaps2::fetch_res",
+		Arguments: []string{"1"},
+		TypeArguments: []string{},
 	}
 	_, err := impl.GetAccountResources(context.Background(), "0x0e69e1d1069f086aca14daccbd3183848a1a446f5c3d3ea09bfa964e9324798c")
 	t.Log(err)
-	resp := make(map[string]interface{})
+	resp := []interface{}{}
 	err = impl.View(context.Background(), p, &resp, nil)
 	assert.NoError(t, err)
 	t.Logf("%v", resp)
